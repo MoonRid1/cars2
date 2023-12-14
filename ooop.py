@@ -90,8 +90,15 @@ class Features(Table):
 
                            
             elif column == "Гос.номер":
-                number = input(f"Введите {column}: ").upper()
-                new_row[column] = number
+                while True:
+                    number = input(f"Введите {column}: ").upper()
+                    if not any(row["Гос.номер"] == number for row in self.table) and number:
+                        new_row[column] = number
+                    elif not number:
+                        print("Гос.номер не может быть пустым введите гос номер")
+                    else:
+                        print("Автомобиль с таким номером уже есть в таблице введите другой номер")
+
             else:
                 value = input(f"Введите {column}: ").upper()
                 new_row[column] = value
