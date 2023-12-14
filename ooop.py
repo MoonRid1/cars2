@@ -44,6 +44,14 @@ class Table:
                 values = [str(row[column]) for column in self.columns]
                 file.write("|".join(values) + "\n")
             print(f"Таблица успешно сохранена в файл: {full_path}")
+    def sort_table(self,column_name):
+        if column_name not in self.columns:
+            print(f"колонка {column_name} не существует в таблице.введите другое название колонки")
+            return
+        self.table=sorted(self.table,key=lambda row: row[column_name] if row[column_name].isdigit() else row[column_name].lower())
+        print(f"Таблица успешно отсортирована по колонке: {column_name}")
+
+
 
 
 class Car(Table):
@@ -94,6 +102,7 @@ class Features(Table):
                     number = input(f"Введите {column}: ").upper()
                     if not any(row["Гос.номер"] == number for row in self.table) and number:
                         new_row[column] = number
+                        break
                     elif not number:
                         print("Гос.номер не может быть пустым введите гос номер")
                     else:
@@ -184,7 +193,8 @@ while True:
     print("5. Показать таблицу")
     print("6. Сохранить таблицу")
     print("7. Загрузить таблицу")
-    print("8. Выйти")
+    print("8.Сортировка таблицы")
+    print("9. Выйти")
 
     choice = input("Выберите действие: ")
 
@@ -212,6 +222,9 @@ while True:
         else:
             print("Неверный выбор.")
     elif choice == "8":
+        column_name=input("Введите имя колонки для сортировки: ")
+        features.sort_table((column_name))
+    elif choice == "9":
         save_exit = input("Сохраниться перед выходом?: ")
         if save_exit.lower() in ['yes', '1', 'да']:
             file_name = input("Введите название файла для сохранения (без расширения, например, table): ")
