@@ -77,8 +77,17 @@ class Features(Table):
                         new_row[column] = tsvet
                         break
             elif column == "Год выпуска":
-                age = input("Введите Год выпуска: ")
-                new_row[column] = age
+               while True:
+                    age = input("Введите Год выпуска: ")
+                    try:
+                        if 1960<=int(age)<=2023:
+                            new_row[column] = age
+                            break
+                        else:
+                            print("Год выпуска не может быть раньше 1960 или быть после 2023")
+                    except ValueError:
+                        print("Год должен быть числом")
+
                            
             elif column == "Гос.номер":
                 number = input(f"Введите {column}: ").upper()
